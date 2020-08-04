@@ -1,0 +1,32 @@
+{
+   "stac_version": "0.9.0-rc-2",
+   "id": "silver_jackets",
+   "title": "Silver Jackets",
+   "description": "The library is based off a Silver Jackets submission.",
+   "links": [
+      {
+         "rel": "self",
+         "href": "/mmc_fim_library_stac/silver_jackets/catalog.json"
+      },
+      {
+         "rel": "parent",
+         "href": "../catalog.json"
+      },
+      {
+         "rel": "root",
+         "href": "/mmc_fim_library_stac/catalog.json"
+      },
+      {
+         "rel": "child",
+         "id": 3964,
+         "title": "Wildcat Creek",
+         "href": "/mmc_fim_library_stac/silver_jackets/3964/catalog.json"
+      },
+      {
+         "rel": "child",
+         "id": 4163,
+         "title": "Lake City",
+         "href": "/mmc_fim_library_stac/silver_jackets/4163/catalog.json"
+      }
+   ]
+}

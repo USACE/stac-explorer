@@ -19,29 +19,7 @@ export default () => (
         <p className="text-gray-800 mt-2 font-thin text-2xl">Subtitle</p>
       </div>
 
-      <div className="container mt-24 mx-auto flex justify-around">
-        <Card
-          title="Card 1"
-          text="Card 1 Text"
-          img={waterImage}
-          imgAlt="Card 1 Image"
-          href="/#link1"
-        />
-        <Card
-          title="Card 2"
-          text="Card 2 Text"
-          img={waterImage}
-          imgAlt="Card 2 Image"
-          href="/#link2"
-        />
-        <Card
-          title="Card 3"
-          text="Card 3 Text"
-          img={waterImage}
-          imgAlt="Card 3 Image"
-          href="/#link3"
-        />
-      </div>
+      <div className="container mt-24 mx-auto flex justify-around"></div>
       <div className="container mx-auto mt-24">
         <p className="font-light text-center italic">Tagline</p>
       </div>

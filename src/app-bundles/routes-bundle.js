@@ -1,14 +1,12 @@
 import { createRouteBundle } from "redux-bundler";
 
-import Home from "../app-pages/home/home";
+import Catalog from "../app-pages/catalog";
+
 import fourOhFour from "../app-pages/fourOhFour";
-import Logout from "../app-pages/logout";
 
 export default createRouteBundle(
   {
-    "": Home,
-    "/": Home,
-    "/logout": Logout,
+    "/stac/*": Catalog,
     "*": fourOhFour,
   },
   {
