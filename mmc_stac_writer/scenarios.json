@@ -1,0 +1,17 @@
+[
+  {
+    "ID": 1,
+    "NAME": "Hurricane XYZ With No Future Precipitation",
+    "DESCRIPTION": "This scenario is just an example used for application development. Real scenario names, descriptions, etc. will need to be sourced from the FIM database"
+  },
+  {
+    "ID": 2,
+    "NAME": "Hurricane XYZ With 2 Days Forecasted Precipitation",
+    "DESCRIPTION": "This scenario is just an example used for application development. Real scenario names, descriptions, etc. will need to be sourced from the FIM database"
+  },
+  {
+    "ID": 3,
+    "NAME": "Hurricane XYZ if Levee is Breached",
+    "DESCRIPTION": "This scenario is just an example used for application development. Real scenario names, descriptions, etc. will need to be sourced from the FIM database"
+  }
+]

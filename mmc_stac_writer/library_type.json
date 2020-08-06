@@ -1,0 +1,44 @@
+[
+  {
+    "ID": 1,
+    "ALIAS": "CWMS",
+    "NAME": "cwms",
+    "DESCRIPTION": "The library is based off a CWMS project."
+  },
+  {
+    "ID": 2,
+    "ALIAS": "Dam Study",
+    "NAME": "dam_study",
+    "DESCRIPTION": "The library is based off a Dam study."
+  },
+  {
+    "ID": 3,
+    "ALIAS": "Levee Study",
+    "NAME": "levee_study",
+    "DESCRIPTION": "The library is based off a Levee study."
+  },
+  {
+    "ID": 4,
+    "ALIAS": "Flood Fight",
+    "NAME": "flood_fight",
+    "DESCRIPTION": "The library is based off a Flood Fight."
+  },
+  {
+    "ID": 5,
+    "ALIAS": "Silver Jackets",
+    "NAME": "silver_jackets",
+    "DESCRIPTION": "The library is based off a Silver Jackets submission."
+  },
+  {
+    "ID": 6,
+    "ALIAS": "FEMA",
+    "NAME": "fema",
+    "DESCRIPTION": "The library is based off a FEMA submission."
+  },
+  {
+    "ID": 7,
+    "ALIAS": "Rapid Response Inundation Mapping",
+    "NAME": "rrim",
+    "DESCRIPTION": "The library is based off a Rapid Response Inundation Mapping submission."
+  }
+]
