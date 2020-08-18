@@ -1,0 +1,64 @@
+{
+  "stac_version": "1.0.0-beta.1",
+  "stac_extensions": [],
+  "type": "Feature",
+  "id": "1506",
+  "collection": "4986",
+  "links": [
+    {
+      "rel": "self",
+      "href": "/mmc_fim_library_stac/3/4986/catalog.json"
+    },
+    {
+      "rel": "root",
+      "href": "/mmc_fim_library_stac/catalog.json"
+    },
+    {
+      "rel": "collection",
+      "href": "../catalog.json"
+    }
+  ],
+  "bbox": [
+    -78.9986606,
+    41.6669372,
+    -77.9523546,
+    42.509675
+  ],
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [
+          -78.9986606,
+          42.509675
+        ],
+        [
+          -78.9986606,
+          41.6669372
+        ],
+        [
+          -77.9523546,
+          41.6669372
+        ],
+        [
+          -77.9523546,
+          42.509675
+        ],
+        [
+          -78.9986606,
+          42.509675
+        ]
+      ]
+    ]
+  },
+  "properties": {
+    "proj:epsg": 4326
+  },
+  "assets": {
+    "FLOOD_DEPTH-37918-1506": {
+      "href": "https://fim-test.sec.usace.army.mil/download/start?type=s3&RASTER_INFO_ID=1506&TABLE=FLOOD_DEPTH&TABLE_ID=37918",
+      "title": "LCL 2ft Overtopping Flood Depth",
+      "type": "image/tiff; application=geotiff; profile=cloud-optimized"
+    }
+  }
+}

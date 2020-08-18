@@ -1,54 +1,62 @@
 {
-   "stac_version": "0.9.0-rc-2",
-   "id": "usace-fim",
-   "title": "Flood Inundation Map Library",
-   "description": "US Army Corps of Engineers Flood Inundation Map Library.  Additional description allowed here.",
-   "links": [
-      {
-         "rel": "self",
-         "href": "/mmc_fim_library_stac/catalog.json"
-      },
-      {
-         "rel": "child",
-         "id": "cwms",
-         "title": "CWMS",
-         "href": "/mmc_fim_library_stac/cwms/catalog.json"
-      },
-      {
-         "rel": "child",
-         "id": "dam_study",
-         "title": "Dam Study",
-         "href": "/mmc_fim_library_stac/dam_study/catalog.json"
-      },
-      {
-         "rel": "child",
-         "id": "levee_study",
-         "title": "Levee Study",
-         "href": "/mmc_fim_library_stac/levee_study/catalog.json"
-      },
-      {
-         "rel": "child",
-         "id": "flood_fight",
-         "title": "Flood Fight",
-         "href": "/mmc_fim_library_stac/flood_fight/catalog.json"
-      },
-      {
-         "rel": "child",
-         "id": "silver_jackets",
-         "title": "Silver Jackets",
-         "href": "/mmc_fim_library_stac/silver_jackets/catalog.json"
-      },
-      {
-         "rel": "child",
-         "id": "fema",
-         "title": "FEMA",
-         "href": "/mmc_fim_library_stac/fema/catalog.json"
-      },
-      {
-         "rel": "child",
-         "id": "rrim",
-         "title": "Rapid Response Inundation Mapping",
-         "href": "/mmc_fim_library_stac/rrim/catalog.json"
-      }
-   ]
+  "stac_version": "1.0.0-beta.1",
+  "id": "usace-fim",
+  "title": "Flood Inundation Map Library",
+  "description": "US Army Corps of Engineers Flood Inundation Map Library.  Additional description allowed here.",
+  "links": [
+    {
+      "rel": "self",
+      "href": "/mmc_fim_library_stac/catalog.json"
+    },
+    {
+      "rel": "parent",
+      "href": "../catalog.json"
+    },
+    {
+      "rel": "root",
+      "href": "/mmc_fim_library_stac/catalog.json"
+    },
+    {
+      "rel": "child",
+      "id": "1",
+      "title": "CWMS",
+      "href": "/mmc_fim_library_stac/1/catalog.json"
+    },
+    {
+      "rel": "child",
+      "id": "2",
+      "title": "Dam Study",
+      "href": "/mmc_fim_library_stac/2/catalog.json"
+    },
+    {
+      "rel": "child",
+      "id": "3",
+      "title": "Levee Study",
+      "href": "/mmc_fim_library_stac/3/catalog.json"
+    },
+    {
+      "rel": "child",
+      "id": "4",
+      "title": "Flood Fight",
+      "href": "/mmc_fim_library_stac/4/catalog.json"
+    },
+    {
+      "rel": "child",
+      "id": "5",
+      "title": "Silver Jackets",
+      "href": "/mmc_fim_library_stac/5/catalog.json"
+    },
+    {
+      "rel": "child",
+      "id": "6",
+      "title": "FEMA",
+      "href": "/mmc_fim_library_stac/6/catalog.json"
+    },
+    {
+      "rel": "child",
+      "id": "7",
+      "title": "Rapid Response Inundation Mapping",
+      "href": "/mmc_fim_library_stac/7/catalog.json"
+    }
+  ]
 }

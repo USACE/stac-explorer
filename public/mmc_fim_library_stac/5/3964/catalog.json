@@ -1,0 +1,25 @@
+{
+  "stac_version": "1.0.0-beta.1",
+  "id": "3964",
+  "title": "Wildcat Creek",
+  "description": "The steady-state HEC-RAS model developed for Wildcat Creek originated as a Digital Flood Insurance Rate Map (DFIRM), which was developed by AMEC.  The model used for this effort was identified as the detailed study of Wildcat Creek. This model was shared with the United States Army Corps of Engineers (USACE) to develop a pilot project designed to produce inundation mapping for the city of Manhattan, Kansas along the Wildcat Creek watershed within the city boundaries.",
+  "links": [
+    {
+      "rel": "self",
+      "href": "/mmc_fim_library_stac/5/3964/catalog.json"
+    },
+    {
+      "rel": "parent",
+      "href": "../catalog.json"
+    },
+    {
+      "rel": "root",
+      "href": "/mmc_fim_library_stac/catalog.json"
+    },
+    {
+      "rel": "item",
+      "href": "FLOOD_DEPTH-39326-2388.json",
+      "title": "33000 cfs Flood Depth"
+    }
+  ]
+}

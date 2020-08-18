@@ -1,0 +1,20 @@
+{
+  "stac_version": "1.0.0-beta.1",
+  "id": "4061",
+  "title": "Lake McNeely Dam (KY00117)",
+  "description": "To model various fail and non-fail scenarios of the dam.",
+  "links": [
+    {
+      "rel": "self",
+      "href": "/mmc_fim_library_stac/6/4061/catalog.json"
+    },
+    {
+      "rel": "parent",
+      "href": "../catalog.json"
+    },
+    {
+      "rel": "root",
+      "href": "/mmc_fim_library_stac/catalog.json"
+    }
+  ]
+}
