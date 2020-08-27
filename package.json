@@ -32,11 +32,7 @@
     "xhr": "^2.5.0"
   },
   "scripts": {
-    "build:tailwind": "postcss src/css/tailwind.css -o src/css/tailwind.generated.css",
-    "watch:tailwind": "postcss -w src/css/tailwind.css -o src/css/tailwind.generated.css",
-    "start": "run-p watch:tailwind start:react",
-    "start:react": "react-scripts start",
-    "prebuild": "npm run build:tailwind",
+    "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -55,5 +51,6 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "proxy": "https://api.rsgis.dev"
 }

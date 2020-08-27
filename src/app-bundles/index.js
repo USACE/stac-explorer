@@ -10,7 +10,8 @@ export default composeBundles(
   routeBundle,
   createStacBundle({
     name: "stac",
-    rootCatalog: "/stac/mmc_fim_library_stac/catalog.json",
+    rootCatalog: "https://api.rsgis.dev/water/fim/catalog.json",
+    // rootCatalog: "/mmc_fim_library_stac/catalog.json"
   }),
   createNestedUrlBundle({
     pkg: pkg,

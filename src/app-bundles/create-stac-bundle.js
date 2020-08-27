@@ -24,6 +24,7 @@ export default (opts) => {
     FETCH_RESULT: `${baseType}_FETCH_RESULT`,
     FETCH_FINISH: `${baseType}_FETCH_FINISH`,
     FETCH_ERROR: `${baseType}_FETCH_ERROR`,
+    QUERY_UPDATE: `${baseType}_QUERY_UPDATE`,
     INITIALIZED: `${baseType}_INITIALIZED`,
   };
 
@@ -31,33 +32,64 @@ export default (opts) => {
   const doFetchUrl = `do${uCaseName}FetchUrl`;
   const doFetchSlugs = `do${uCaseName}FetchSlugs`;
   const doInitialize = `do${uCaseName}Initialize`;
-  const doAppendUrlSTAC = `do${uCaseName}AppendUrlSTAC`;
   const doUpdateUrlSTAC = `do${uCaseName}UpdateUrlSTAC`;
   const doToggleSortOrder = `do${uCaseName}ToggleSortOrder`;
+  const doUpdateQueryParams = `do${uCaseName}UpdateQueryParams`;
 
   // selectors
+  const selectRootCatalogUrl = `select${uCaseName}RootCatalogUrl`;
   const selectRaw = `select${uCaseName}Raw`;
   const selectSlugMap = `select${uCaseName}SlugMap`;
+  const selectTabs = `select${uCaseName}Tabs`;
   const selectInfo = `select${uCaseName}Info`;
-  const selectType = `select${uCaseName}Type`;
+  const selectLinks = `select${uCaseName}Links`;
+  const selectLinksItem = `select${uCaseName}LinksItem`;
+  const selectLinksItemCount = `select${uCaseName}LinksItemCount`;
+  const selectLinksChild = `select${uCaseName}LinksChild`;
+  const selectLinksChildCount = `select${uCaseName}LinksChildCount`;
+  const selectLinkSelf = `select${uCaseName}LinkSelf`;
+  const selectTabActive = `select${uCaseName}TabActive`;
   const selectCurrentSlug = `select${uCaseName}CurrentSlug`;
   const selectDescription = `select${uCaseName}Description`;
   const selectIsFetching = `select${uCaseName}IsFetching`;
-  const selectShouldFetch = `select${uCaseName}ShouldFetch`;
   const selectError = `select${uCaseName}Error`;
   const selectIsInitialized = `select${uCaseName}ShouldInitialize`;
   const selectTitle = `select${uCaseName}Title`;
-  const selectLinkSelf = `select${uCaseName}LinkSelf`;
-  const selectLinksChild = `select${uCaseName}LinksChild`;
   const selectUrlSTACPath = `select${uCaseName}UrlSTACPath`;
   const selectUrlSTACPathParts = `select${uCaseName}UrlSTACPathParts`;
   const selectUrlRegex = `select${uCaseName}UrlRegex`;
   const selectBreadcrumbs = `select${uCaseName}Breadcrumbs`;
   const selectSortOrder = `select${uCaseName}SortOrder`;
+  const selectComponent = `select${uCaseName}Component`;
+  const selectProviders = `select${uCaseName}Providers`;
+  const selectGeometry = `select${uCaseName}Geometry`;
+  const selectAssets = `select${uCaseName}Assets`;
 
   // reactors
   const reactShouldInitialize = `react${uCaseName}ShouldInitialize`;
   const reactShouldFetchSlugs = `react${uCaseName}ShouldFetchSlugs`;
+  const reactShouldUpdateUrl = `react${uCaseName}ShouldUpdateUrl`;
+  const reactShouldSetDefaultTab = `react${uCaseName}ShouldSetDefaultTab`;
+
+  // Valid Tabs for Each Component
+  const validTabs = {
+    catalog: ["catalogs", "items"],
+    item: ["preview", "thumbnail", "assets"],
+  };
+  // Default Tabs for Each Component
+  const defaultTabs = {
+    catalog: "catalogs",
+    item: "preview",
+  };
+
+  const defaultProviders = [
+    {
+      name: "US Army Corps of Engineers",
+      description: "Details on US Army Corps of Engineers as data producer",
+      roles: "producer, processor, host",
+      url: "https://www.usace.army.mil",
+    },
+  ];
 
   return {
     name: config.name,
@@ -67,7 +99,7 @@ export default (opts) => {
         _rootCatalogUrl: config.rootCatalog,
         _rootCatalogSlug: bs58.encode(Buffer.from(config.rootCatalog)),
         _sortOrder: config.sortOrder,
-        _urlRegex: /\/stac\/([a-zA-Z0-9/]+)(?:$|\/|\?)/,
+        _urlRegex: /\/stac\/(?:item\/)?([a-zA-Z0-9/]+)(?:$|\/|\?)/,
         _isInitialized: false,
         _shouldFetch: true,
         _isFetching: false,
@@ -99,6 +131,7 @@ export default (opts) => {
             });
           case actions.INITIALIZED:
           case actions.TOGGLE_SORT_ORDER:
+          case actions.QUERY_UPDATE:
             return {
               ...state,
               ...payload,
@@ -110,19 +143,16 @@ export default (opts) => {
     },
     // Action Creators
     [doInitialize]: () => async ({ dispatch, store }) => {
-      // Slugs we should fetch based on the URL
-      const urlSlugs = store[selectUrlSTACPathParts]();
-      // Slugs we've already attempted to fetch
-      const fetchedSlugs = Object.keys(store[selectSlugMap]());
-      // Fetch slugs we should fetch but haven't yet
-      await store[doFetchSlugs](
-        urlSlugs.filter((s) => !fetchedSlugs.includes(s))
-      );
-      // Base58 Encode Catalog URL and add to slugs
       dispatch({
         type: actions.INITIALIZED,
         payload: { _isInitialized: true },
       });
+    },
+    [doUpdateQueryParams]: (queryObj) => ({ dispatch, store }) => {
+      dispatch({ type: actions.QUERY_UPDATE, payload: {} });
+      // Get current query params
+      const queryObjCurrent = store.selectQueryObject();
+      store.doUpdateQuery({ ...queryObjCurrent, ...queryObj });
     },
     [doFetchUrl]: (url) => ({ store }) => {
       store[doFetchSlugs]([bs58.encode(Buffer.from(url))]);
@@ -161,17 +191,15 @@ export default (opts) => {
         )
       ).then((result) => dispatch({ type: actions.FETCH_FINISH }));
     },
-
-    [doUpdateUrlSTAC]: (slugs) => ({ store }) => {
-      // Updates the ?stac= query parameter with new URL
-      store.doUpdateUrl({ pathname: `/stac/${slugs.join("/")}` });
-    },
-    [doAppendUrlSTAC]: (url) => ({ store }) => {
-      // Updates the ?stac= query parameter with new URL
-      const stacPathPartsNew = store[selectUrlSTACPathParts]().concat(
-        bs58.encode(Buffer.from(url))
-      );
-      store[doUpdateUrlSTAC](stacPathPartsNew);
+    [doUpdateUrlSTAC]: (link) => ({ store }) => {
+      const slug = bs58.encode(Buffer.from(link.href));
+      const stacPathPartsNew = store[selectUrlSTACPathParts]().concat(slug);
+      const stacPath = stacPathPartsNew.join("/");
+      if (link.rel === "item") {
+        store.doUpdateUrl({ pathname: `/stac/item/${stacPath}` });
+      } else {
+        store.doUpdateUrl({ pathname: `/stac/${stacPath}` });
+      }
     },
     [doToggleSortOrder]: () => ({ dispatch, store }) => {
       const newSortOrder =
@@ -203,31 +231,39 @@ export default (opts) => {
           : {};
       }
     ),
+    [selectLinksItem]: createSelector(
+      selectLinks,
+      (links) => links.filter((L) => L.rel === "item") || []
+    ),
+    [selectLinksItemCount]: createSelector(
+      selectLinksItem,
+      (linksItem) => linksItem.length
+    ),
     // Catalogs and Collections have a "description" key; Items do not.
-    [selectDescription]: createSelector(selectInfo, selectType, (info, type) =>
-      !info ? "" : type === "item" ? `${info.id} STAC Item` : info.description
+    [selectDescription]: createSelector(selectInfo, (info) =>
+      !info ? "" : info.description || null
     ),
     // Catalog, Collection, Item
-    [selectType]: createSelector(
-      selectCurrentSlug,
-      selectSlugMap,
-      (currentSlug, SlugMap) => {
-        return SlugMap.hasOwnProperty(currentSlug)
-          ? SlugMap[currentSlug]["type"]
-          : {};
-      }
-    ),
+    [selectTabActive]: createSelector("selectQueryObject", (queryObject) => {
+      return queryObject.t || null;
+    }),
     [selectIsFetching]: (state) => state[config.name]._isFetching,
-    [selectShouldFetch]: (state) => state[config.name]._shouldFetch,
     [selectError]: (state) => state[config.name]._error,
-    [selectTitle]: createSelector(selectInfo, (info) => info && info.title),
-    [selectLinkSelf]: createSelector(selectInfo, (info) =>
-      info && info.links ? info.links.find((L) => L.rel === "self") : {}
+    [selectTitle]: createSelector(
+      selectInfo,
+      (info) => info && (info.title || info.id)
+    ),
+    [selectLinks]: createSelector(selectInfo, (info) =>
+      info && info.links ? info.links : []
+    ),
+    [selectLinkSelf]: createSelector(
+      selectLinks,
+      (links) => links.find((L) => L.rel === "self") || {}
     ),
     [selectLinksChild]: createSelector(
-      selectInfo,
+      selectLinks,
       selectSortOrder,
-      (info, sortOrder) => {
+      (links, sortOrder) => {
         const sortAsc = (items) => {
           return items.sort((a, b) => {
             if (a.title.toUpperCase() < b.title.toUpperCase()) {
@@ -252,14 +288,18 @@ export default (opts) => {
           });
         };
 
-        if (!info || !info.links) {
+        if (!links) {
           return [];
         }
-        const childLinks = info.links.filter((L) => L.rel === "child");
+        const childLinks = links.filter((L) => L.rel === "child");
         return sortOrder === "ascending"
           ? sortAsc(childLinks)
           : sortDesc(childLinks);
       }
+    ),
+    [selectLinksChildCount]: createSelector(
+      selectLinksChild,
+      (linksChild) => linksChild.length
     ),
     [selectUrlSTACPath]: createSelector(
       config.routeInfoSelector,
@@ -281,28 +321,86 @@ export default (opts) => {
           ? urlSTACPathParts[urlSTACPathParts.length - 1]
           : null
     ),
+    [selectAssets]: createSelector(selectInfo, (info) =>
+      info && info.assets ? info.assets : null
+    ),
+    [selectGeometry]: createSelector(selectInfo, (info) =>
+      info && info.geometry ? info.geometry : null
+    ),
     // Ancestors used to render breadcrumb; {title: "my title", link: "link"}
     [selectBreadcrumbs]: createSelector(
       selectUrlSTACPathParts,
       selectSlugMap,
       (slugs, slugMap) => {
         if (!slugs.length) return [];
-        return slugs.map((slug, idx) => {
+
+        let urlParts = ["stac"];
+        return slugs.map((slug) => {
           if (
             slugMap.hasOwnProperty(slug) &&
             slugMap[slug].hasOwnProperty("info") &&
             slugMap[slug]["info"].hasOwnProperty("title")
           ) {
+            urlParts.push(slug);
             return {
               name: slugMap[slug]["info"]["title"],
-              slug: slug,
+              href: urlParts.join("/"),
             };
           }
-          return { name: null, slug: slug };
+          // Must be an item
+          return {
+            name: slugMap[slug] && slugMap[slug]["info"]["id"],
+            href: null,
+          };
         });
       }
     ),
+    [selectRootCatalogUrl]: (state) => state[config.name]._rootCatalogUrl,
+    [selectProviders]: createSelector(selectInfo, (info) =>
+      info.providers ? info.providers : defaultProviders
+    ),
     [selectIsInitialized]: (state) => state[config.name]._isInitialized,
+    [selectComponent]: createSelector("selectRouteInfo", (routeInfo) => {
+      if (routeInfo.pattern === "/stac/*") {
+        return "catalog";
+      }
+      if (routeInfo.pattern === "/stac/item/*") {
+        return "item";
+      }
+      return null;
+    }),
+    [selectTabs]: createSelector(
+      selectComponent,
+      selectLinksChildCount,
+      selectLinksItemCount,
+      selectTabActive,
+      (component, childCount, itemCount, tabActive) => {
+        const tabIsActive = (tabName) => (tabActive === tabName ? true : false);
+        if (component === "item") {
+          return validTabs.item.map((t) => ({
+            name: t,
+            isActive: tabIsActive(t),
+          }));
+        }
+        if (component === "catalog") {
+          let tabs = [];
+          if (childCount)
+            tabs.push({
+              name: "catalogs",
+              badge: childCount,
+              isActive: tabIsActive("catalogs"),
+            });
+          if (itemCount)
+            tabs.push({
+              name: "items",
+              badge: itemCount,
+              isActive: tabIsActive("items"),
+            });
+          return tabs;
+        }
+        return [];
+      }
+    ),
     // Reactors
     [reactShouldInitialize]: createSelector(
       selectIsInitialized,
@@ -311,18 +409,65 @@ export default (opts) => {
     ),
     [reactShouldFetchSlugs]: createSelector(
       selectIsInitialized,
-      selectCurrentSlug,
+      selectIsFetching,
+      selectError,
+      selectUrlSTACPathParts,
       selectSlugMap,
-      (isInitialized, currentSlug, slugMap) => {
+      (isInitialized, isFetching, error, slugs, slugMap) => {
         // If not initialized or ?stac= not in the URL or already have slug in store; do nothing
-        if (
-          !isInitialized ||
-          !currentSlug ||
-          Object.keys(slugMap).includes(currentSlug)
-        ) {
+        if (!isInitialized || isFetching || error || !slugs.length) {
           return null;
         }
-        return { actionCreator: doFetchSlugs, args: [[currentSlug]] };
+        const unfetchedSlugs = slugs.filter((s) =>
+          slugMap.hasOwnProperty(s) ? false : true
+        );
+        if (!unfetchedSlugs.length) {
+          return null;
+        }
+        return { actionCreator: doFetchSlugs, args: [unfetchedSlugs] };
+        // return null;
+      }
+    ),
+    // if stac component live but no stacpath in URL
+    // update the url and render the root catalog
+    [reactShouldUpdateUrl]: createSelector(
+      config.routeInfoSelector,
+      selectUrlSTACPath,
+      selectRootCatalogUrl,
+      (pathname, stacpath, rootCatalogUrl) => {
+        if (pathname === "/stac" && stacpath === "") {
+          return {
+            actionCreator: [doUpdateUrlSTAC],
+            args: [{ href: rootCatalogUrl }],
+          };
+        }
+      }
+    ),
+    [reactShouldSetDefaultTab]: createSelector(
+      selectComponent,
+      "selectQueryObject",
+      selectLinksChild,
+      selectLinksItem,
+      (component, queryObject, linksChild, linksItem) => {
+        // Missing Query Object OR
+        // Invalid Query Object for Component
+        const tab = queryObject.t;
+        if (!tab || !validTabs[component].includes(tab)) {
+          return {
+            actionCreator: [doUpdateQueryParams],
+            args: [{ t: defaultTabs[component] }],
+          };
+        }
+        // Active Tab is Catalogs but there are no catalogs to show
+        if (tab === "catalogs" && !linksChild.length) {
+          if (linksItem.length) {
+            return {
+              actionCreator: [doUpdateQueryParams],
+              args: [{ t: "items" }],
+            };
+          }
+        }
+        return null;
       }
     ),
   };
