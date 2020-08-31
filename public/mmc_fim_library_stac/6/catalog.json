@@ -6,7 +6,7 @@
   "links": [
     {
       "rel": "self",
-      "href": "/mmc_fim_library_stac/6/catalog.json"
+      "href": "https://api.rsgis.dev/water/fim/6/catalog.json"
     },
     {
       "rel": "parent",
@@ -14,13 +14,13 @@
     },
     {
       "rel": "root",
-      "href": "/mmc_fim_library_stac/catalog.json"
+      "href": "https://api.rsgis.dev/water/fim/catalog.json"
     },
     {
       "rel": "child",
       "id": 4061,
       "title": "Lake McNeely Dam (KY00117)",
-      "href": "/mmc_fim_library_stac/6/4061/catalog.json"
+      "href": "https://api.rsgis.dev/water/fim/6/4061/catalog.json"
     }
   ]
 }

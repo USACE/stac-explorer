@@ -5,14 +5,15 @@ import routeBundle from "./routes-bundle";
 import pkg from "../../package.json";
 import createStacBundle from "./create-stac-bundle";
 import mapsBundle from "./maps-bundle";
+import smallmapBundle from "./stac-smallmap-bundle";
 
 export default composeBundles(
   routeBundle,
   createStacBundle({
     name: "stac",
     rootCatalog: "https://api.rsgis.dev/water/fim/catalog.json",
-    // rootCatalog: "/mmc_fim_library_stac/catalog.json"
   }),
+  smallmapBundle,
   createNestedUrlBundle({
     pkg: pkg,
   }),

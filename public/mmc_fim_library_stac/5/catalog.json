@@ -6,7 +6,7 @@
   "links": [
     {
       "rel": "self",
-      "href": "/mmc_fim_library_stac/5/catalog.json"
+      "href": "https://api.rsgis.dev/water/fim/5/catalog.json"
     },
     {
       "rel": "parent",
@@ -14,31 +14,31 @@
     },
     {
       "rel": "root",
-      "href": "/mmc_fim_library_stac/catalog.json"
+      "href": "https://api.rsgis.dev/water/fim/catalog.json"
     },
     {
       "rel": "child",
       "id": 3964,
       "title": "Wildcat Creek",
-      "href": "/mmc_fim_library_stac/5/3964/catalog.json"
+      "href": "https://api.rsgis.dev/water/fim/5/3964/catalog.json"
     },
     {
       "rel": "child",
       "id": 5787,
       "title": "River System A",
-      "href": "/mmc_fim_library_stac/5/5787/catalog.json"
+      "href": "https://api.rsgis.dev/water/fim/5/5787/catalog.json"
     },
     {
       "rel": "child",
       "id": 5806,
       "title": "Savannah River Basin - JST Dam Spillway Releases",
-      "href": "/mmc_fim_library_stac/5/5806/catalog.json"
+      "href": "https://api.rsgis.dev/water/fim/5/5806/catalog.json"
     },
     {
       "rel": "child",
       "id": 4163,
       "title": "Lake City",
-      "href": "/mmc_fim_library_stac/5/4163/catalog.json"
+      "href": "https://api.rsgis.dev/water/fim/5/4163/catalog.json"
     }
   ]
 }

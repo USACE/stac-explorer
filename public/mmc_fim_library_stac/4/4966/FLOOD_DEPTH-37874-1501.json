@@ -7,47 +7,27 @@
   "links": [
     {
       "rel": "self",
-      "href": "/mmc_fim_library_stac/4/4966/catalog.json"
+      "href": "https://api.rsgis.dev/water/fim/4/4966/catalog.json"
     },
     {
       "rel": "root",
-      "href": "/mmc_fim_library_stac/catalog.json"
+      "href": "https://api.rsgis.dev/water/fim/catalog.json"
     },
     {
       "rel": "collection",
       "href": "../catalog.json"
     }
   ],
-  "bbox": [
-    -156.7571638,
-    20.50486,
-    -155.8422843,
-    21.0621091
-  ],
+  "bbox": [-156.7571638, 20.50486, -155.8422843, 21.0621091],
   "geometry": {
     "type": "Polygon",
     "coordinates": [
       [
-        [
-          -156.7571638,
-          21.0621091
-        ],
-        [
-          -156.7571638,
-          20.50486
-        ],
-        [
-          -155.8422843,
-          20.50486
-        ],
-        [
-          -155.8422843,
-          21.0621091
-        ],
-        [
-          -156.7571638,
-          21.0621091
-        ]
+        [-156.7571638, 21.0621091],
+        [-156.7571638, 20.50486],
+        [-155.8422843, 20.50486],
+        [-155.8422843, 21.0621091],
+        [-156.7571638, 21.0621091]
       ]
     ]
   },

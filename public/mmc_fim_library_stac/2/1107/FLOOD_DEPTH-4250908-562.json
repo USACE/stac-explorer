@@ -7,11 +7,11 @@
   "links": [
     {
       "rel": "self",
-      "href": "/mmc_fim_library_stac/2/1107/catalog.json"
+      "href": "https://api.rsgis.dev/water/fim/2/1107/catalog.json"
     },
     {
       "rel": "root",
-      "href": "/mmc_fim_library_stac/catalog.json"
+      "href": "https://api.rsgis.dev/water/fim/catalog.json"
     },
     {
       "rel": "collection",

@@ -6,7 +6,7 @@
   "links": [
     {
       "rel": "self",
-      "href": "/mmc_fim_library_stac/catalog.json"
+      "href": "https://api.rsgis.dev/water/fim/catalog.json"
     },
     {
       "rel": "parent",
@@ -14,49 +14,49 @@
     },
     {
       "rel": "root",
-      "href": "/mmc_fim_library_stac/catalog.json"
+      "href": "https://api.rsgis.dev/water/fim/catalog.json"
     },
     {
       "rel": "child",
       "id": "1",
       "title": "CWMS",
-      "href": "/mmc_fim_library_stac/1/catalog.json"
+      "href": "https://api.rsgis.dev/water/fim/1/catalog.json"
     },
     {
       "rel": "child",
       "id": "2",
       "title": "Dam Study",
-      "href": "/mmc_fim_library_stac/2/catalog.json"
+      "href": "https://api.rsgis.dev/water/fim/2/catalog.json"
     },
     {
       "rel": "child",
       "id": "3",
       "title": "Levee Study",
-      "href": "/mmc_fim_library_stac/3/catalog.json"
+      "href": "https://api.rsgis.dev/water/fim/3/catalog.json"
     },
     {
       "rel": "child",
       "id": "4",
       "title": "Flood Fight",
-      "href": "/mmc_fim_library_stac/4/catalog.json"
+      "href": "https://api.rsgis.dev/water/fim/4/catalog.json"
     },
     {
       "rel": "child",
       "id": "5",
       "title": "Silver Jackets",
-      "href": "/mmc_fim_library_stac/5/catalog.json"
+      "href": "https://api.rsgis.dev/water/fim/5/catalog.json"
     },
     {
       "rel": "child",
       "id": "6",
       "title": "FEMA",
-      "href": "/mmc_fim_library_stac/6/catalog.json"
+      "href": "https://api.rsgis.dev/water/fim/6/catalog.json"
     },
     {
       "rel": "child",
       "id": "7",
       "title": "Rapid Response Inundation Mapping",
-      "href": "/mmc_fim_library_stac/7/catalog.json"
+      "href": "https://api.rsgis.dev/water/fim/7/catalog.json"
     }
   ]
 }

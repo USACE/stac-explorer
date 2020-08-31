@@ -2,43 +2,82 @@ import React from "react";
 
 import { connect } from "redux-bundler-react";
 
-import {
-  Breadcrumb,
-  Description,
-  MetadataPanel,
-  MetadataPanelBlock,
-  Tabs,
-} from "./shared";
+import { Breadcrumb, Description, MetadataPanel, Tabs } from "./shared";
 
-const MetadataProviders = connect(
+const CatalogMetadataTable = connect(
   "selectStacProviders",
-  ({ stacProviders }) => (
-    <div>
-      <h6 className="bg-dark text-white rounded-lg p-1">Providers</h6>
-      <ul className="list-group">
-        {stacProviders.map((p, idx) => (
-          <li className="list-group-item" key={idx}>
-            <div>
-              <a target="_blank" rel="noopener noreferrer" href={p.url}>
-                {p.name}
-              </a>
-              <em className="ml-1">({p.roles})</em>
-            </div>
-            <div>
-              <p>{p.description}</p>
-            </div>
-          </li>
-        ))}
-      </ul>
-    </div>
-  )
-);
+  "selectStacInfo",
+  ({ stacProviders, stacInfo: info }) => {
+    // Styles on Headings
 
-const CatalogMetadataPanelBlocks = () => (
-  <>
-    <MetadataPanelBlock title="Metadata" />
-    <MetadataProviders />
-  </>
+    const Heading = ({ title }) => (
+      <tr className="my-3">
+        <td colspan="2" className="bg-success rounded">
+          <h6>{title}</h6>
+        </td>
+      </tr>
+    );
+
+    const Entry = ({ title, value }) => {
+      return (
+        <tr>
+          <td className="title">{title}</td>
+          <td>{value}</td>
+        </tr>
+      );
+    };
+
+    const Provider = ({ providerInfo: p }) => (
+      <tr>
+        <td colspan="2" className="provider">
+          <a target="_blank" rel="noopener noreferrer" href={p.url}>
+            {p.name}
+          </a>
+          <em className="ml-2">({p.roles.join(", ")})</em>
+          <div className="description">
+            <p>{p.description}</p>
+          </div>
+        </td>
+      </tr>
+    );
+
+    return (
+      info && (
+        <table className="table-sm">
+          <tbody>
+            <Heading title="Metadata" />
+            {info.stac_version && (
+              <Entry title="STAC Version" value={info.stac_version} />
+            )}
+            {info.license && (
+              <Entry
+                title="License"
+                value={
+                  <a
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href={`http://spdx.org/licenses/${info.license}.html`}
+                  >
+                    {info.license}
+                  </a>
+                }
+              />
+            )}
+
+            {/* STAC PROVIDERS */}
+            {stacProviders && stacProviders.length ? (
+              <>
+                <Heading title="Providers" />
+                {stacProviders.map((p, idx) => (
+                  <Provider providerInfo={p} />
+                ))}
+              </>
+            ) : null}
+          </tbody>
+        </table>
+      )
+    );
+  }
 );
 
 const TableCatalogs = connect(
@@ -135,7 +174,7 @@ export default connect("selectStacTabActive", ({ stacTabActive }) => (
       </div>
       <div className="col-md-4">
         <MetadataPanel>
-          <CatalogMetadataPanelBlocks />
+          <CatalogMetadataTable />
         </MetadataPanel>
       </div>
     </div>

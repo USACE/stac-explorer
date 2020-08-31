@@ -64,6 +64,9 @@ export default (opts) => {
   const selectProviders = `select${uCaseName}Providers`;
   const selectGeometry = `select${uCaseName}Geometry`;
   const selectAssets = `select${uCaseName}Assets`;
+  const selectExtent = `select${uCaseName}Extent`;
+  const selectTemporalExtent = `select${uCaseName}TemporalExtent`;
+  const selectSpatialExtent = `select${uCaseName}SpatialExtent`;
 
   // reactors
   const reactShouldInitialize = `react${uCaseName}ShouldInitialize`;
@@ -85,8 +88,9 @@ export default (opts) => {
   const defaultProviders = [
     {
       name: "US Army Corps of Engineers",
-      description: "Details on US Army Corps of Engineers as data producer",
-      roles: "producer, processor, host",
+      description:
+        "Modeling and mapping completed by the US Army Corps of Engineers",
+      roles: ["producer", "processor", "host"],
       url: "https://www.usace.army.mil",
     },
   ];
@@ -183,6 +187,7 @@ export default (opts) => {
                   [slug]: {
                     lastFetchDate: new Date(),
                     fetchError: e,
+                    info: {},
                   },
                   error: e,
                 },
@@ -401,6 +406,19 @@ export default (opts) => {
         return [];
       }
     ),
+    [selectExtent]: createSelector(
+      selectInfo,
+      (info) => (info && info.extent) || null
+    ),
+    [selectSpatialExtent]: createSelector(
+      selectExtent,
+      (extent) => (extent && extent.spatial) || null
+    ),
+    [selectTemporalExtent]: createSelector(
+      selectExtent,
+      (extent) =>
+        (extent && extent.temporal && extent.temporal.interval) || null
+    ),
     // Reactors
     [reactShouldInitialize]: createSelector(
       selectIsInitialized,
@@ -415,7 +433,7 @@ export default (opts) => {
       selectSlugMap,
       (isInitialized, isFetching, error, slugs, slugMap) => {
         // If not initialized or ?stac= not in the URL or already have slug in store; do nothing
-        if (!isInitialized || isFetching || error || !slugs.length) {
+        if (!isInitialized || isFetching || !slugs.length) {
           return null;
         }
         const unfetchedSlugs = slugs.filter((s) =>

@@ -6,7 +6,7 @@
   "links": [
     {
       "rel": "self",
-      "href": "/mmc_fim_library_stac/4/4966/catalog.json"
+      "href": "https://api.rsgis.dev/water/fim/4/4966/catalog.json"
     },
     {
       "rel": "parent",
@@ -14,7 +14,7 @@
     },
     {
       "rel": "root",
-      "href": "/mmc_fim_library_stac/catalog.json"
+      "href": "https://api.rsgis.dev/water/fim/catalog.json"
     },
     {
       "rel": "item",

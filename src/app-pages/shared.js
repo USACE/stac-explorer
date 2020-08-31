@@ -1,6 +1,6 @@
 import React from "react";
 
-import Map from "../app-components/map";
+import Map from "../app-components/simplemap";
 import { connect } from "redux-bundler-react";
 
 export const Breadcrumb = connect(
@@ -105,7 +105,7 @@ export const MetadataPanel = ({ children }) => (
       className="mb-3 rounded-lg border border-secondary overflow-hidden"
     >
       <Map
-        mapKey={"productDetailMap"}
+        mapKey={"smallMap"}
         height={240}
         options={{
           center: [-98.0, 37.0],
@@ -114,19 +114,5 @@ export const MetadataPanel = ({ children }) => (
       />
     </div>
     {children}
-  </div>
-);
-
-export const MetadataPanelBlock = ({ title, entries = {} }) => (
-  <div>
-    <h6 className="bg-dark text-white rounded-lg p-1">{title}</h6>
-    <ul>
-      {Object.keys(entries).map((k, idx) => (
-        <li key={idx} className="d-flex">
-          <div className="border-right border-lg border-dark pr-2">{k}</div>
-          <div className="ml-2">{entries[k]}</div>
-        </li>
-      ))}
-    </ul>
   </div>
 );
