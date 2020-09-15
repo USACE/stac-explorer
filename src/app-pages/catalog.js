@@ -11,7 +11,7 @@ const CatalogMetadataTable = connect(
     // Styles on Headings
 
     const Heading = ({ title }) => (
-      <tr className="my-3">
+      <tr>
         <td colspan="2" className="bg-success rounded">
           <h6>{title}</h6>
         </td>
