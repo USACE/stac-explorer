@@ -14,28 +14,29 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
-    "autoprefixer": "^9.8.5",
+    "autoprefixer": "^9.8.6",
     "bs58": "^4.0.1",
     "classnames": "^2.2.6",
     "internal-nav-helper": "^3.1.0",
     "money-clip": "^3.0.2",
     "npm-run-all": "^4.1.5",
-    "ol": "^6.4.0",
+    "ol": "^6.4.3",
     "postcss": "^7.0.32",
-    "postcss-cli": "^7.1.1",
+    "postcss-cli": "^7.1.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-scripts": "3.4.1",
     "redux-bundler": "^27.0.2",
     "redux-bundler-react": "^1.2.0",
-    "tailwindcss": "^1.6.0",
+    "tailwindcss": "^1.8.10",
     "xhr": "^2.5.0"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "deploy": "aws s3 rm s3://corpsmap-appz/stac --recursive && aws s3 cp ./build/ s3://corpsmap-appz/stac --recursive"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -51,6 +52,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "proxy": "https://api.rsgis.dev"
+  }
 }

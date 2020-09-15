@@ -8,8 +8,12 @@ function TabPanel() {
   const Tabs = ({ items }) => (
     <div className="tabs">
       <ul>
-        {items.map((item) => (
-          <li id={item.id} className={item.isActive ? "is-active" : ""}>
+        {items.map((item, idx) => (
+          <li
+            key={item.id}
+            id={item.id}
+            className={item.isActive ? "is-active" : ""}
+          >
             <a>{item.name}</a>
           </li>
         ))}

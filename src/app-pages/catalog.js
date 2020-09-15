@@ -12,7 +12,7 @@ const CatalogMetadataTable = connect(
 
     const Heading = ({ title }) => (
       <tr>
-        <td colspan="2" className="bg-success rounded">
+        <td colSpan="2" className="bg-success rounded">
           <h6>{title}</h6>
         </td>
       </tr>
@@ -29,7 +29,7 @@ const CatalogMetadataTable = connect(
 
     const Provider = ({ providerInfo: p }) => (
       <tr>
-        <td colspan="2" className="provider">
+        <td colSpan="2" className="provider">
           <a target="_blank" rel="noopener noreferrer" href={p.url}>
             {p.name}
           </a>
