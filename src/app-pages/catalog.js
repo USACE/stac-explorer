@@ -119,13 +119,13 @@ const Table = connect(
         <thead>
           <tr>
             <th scope="col">
-              <div className="d-flex justify-content-between">
+              <div
+                className="cursor-pointer d-flex justify-content-between"
+                onClick={handleSortOrderClick}
+              >
                 <div>Title</div>
                 <div>
-                  <i
-                    onClick={handleSortOrderClick}
-                    className={`cursor-pointer mdi mdi-sort-${stacSortOrder}`}
-                  />
+                  <i className={`mdi mdi-sort-${stacSortOrder}`} />
                 </div>
               </div>
             </th>

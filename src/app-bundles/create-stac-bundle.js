@@ -467,6 +467,8 @@ export default (opts) => {
       selectLinksChild,
       selectLinksItem,
       (component, queryObject, linksChild, linksItem) => {
+        // If on a STAC component, do not add STAC query parameters
+        if (!component) return null;
         // Missing Query Object OR
         // Invalid Query Object for Component
         const tab = queryObject.t;
