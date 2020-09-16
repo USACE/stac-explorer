@@ -5,11 +5,15 @@ import { connect } from "redux-bundler-react";
 
 export const Breadcrumb = connect(
   "selectStacBreadcrumbs",
-  "doUpdateUrl",
+  "doUpdateUrlWithHomepage",
   "doStacUpdateQueryParams",
-  ({ stacBreadcrumbs: crumbs, doUpdateUrl, doStacUpdateQueryParams }) => {
+  ({
+    stacBreadcrumbs: crumbs,
+    doUpdateUrlWithHomepage: doUpdateUrl,
+    doStacUpdateQueryParams,
+  }) => {
     const handleCrumbClick = (e, href) => {
-      doUpdateUrl({ pathname: href });
+      doUpdateUrl(href);
       doStacUpdateQueryParams({ t: "catalogs" });
       e.preventDefault();
     };
