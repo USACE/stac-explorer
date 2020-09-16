@@ -11,7 +11,12 @@ export default composeBundles(
   routeBundle,
   createStacBundle({
     name: "stac",
-    rootCatalog: "https://api.rsgis.dev/water/fim/catalog.json",
+    routeInfoSelector: "selectPathnameMinusHomepage",
+    rootCatalog:
+      // Proxy requests in development to avoid CORS woes
+      process.env.NODE_ENV === "development"
+        ? "/water/fim/catalog.json"
+        : "https://api.rsgis.dev/water/fim/catalog.json",
   }),
   smallmapBundle,
   createNestedUrlBundle({

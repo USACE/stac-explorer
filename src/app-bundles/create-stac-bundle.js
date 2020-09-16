@@ -201,9 +201,9 @@ export default (opts) => {
       const stacPathPartsNew = store[selectUrlSTACPathParts]().concat(slug);
       const stacPath = stacPathPartsNew.join("/");
       if (link.rel === "item") {
-        store.doUpdateUrl({ pathname: `/stac/item/${stacPath}` });
+        store.doUpdateUrlWithHomepage(`/stac/item/${stacPath}`);
       } else {
-        store.doUpdateUrl({ pathname: `/stac/${stacPath}` });
+        store.doUpdateUrlWithHomepage(`/stac/${stacPath}`);
       }
     },
     [doToggleSortOrder]: () => ({ dispatch, store }) => {
@@ -349,7 +349,7 @@ export default (opts) => {
             urlParts.push(slug);
             return {
               name: slugMap[slug]["info"]["title"],
-              href: urlParts.join("/"),
+              href: `/${urlParts.join("/")}`,
             };
           }
           // Must be an item
