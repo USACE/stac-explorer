@@ -32,6 +32,8 @@ export default {
           } else {
             return state;
           }
+        case "URL_UPDATED":
+          return { ...state, _shouldAddData: true };
         case "SMALLMAP_INITIALIZE_START":
         case "SMALLMAP_INITIALIZE_FINISH":
         case "SMALLMAP_ADD_DATA_START":
@@ -70,7 +72,19 @@ export default {
       type: "SMALLMAP_ADD_DATA_START",
       payload: { _shouldAddData: false },
     });
-    const data = store.selectStacGeometry();
+
+    // The Map
+    const map = store.selectMapsObject()["smallMap"];
+
+    // Clear Potentially Old Layer
+    const lyr = store.selectSmallMapLayer();
+    const src = lyr.getSource();
+    map.removeLayer(lyr);
+    src.clear();
+
+    // Add New Layers
+    const data =
+      store.selectStacGeometry() ?? store.selectStacSpatialExtentAsGeometry();
     if (!data) {
       dispatch({
         type: "SMALLMAP_ADD_DATA_FINISH",
@@ -79,12 +93,7 @@ export default {
     }
     const geoProjection = store.selectMapsGeoProjection();
     const webProjection = store.selectMapsWebProjection();
-    const map = store.selectMapsObject()["smallMap"];
-    const lyr = store.selectSmallMapLayer();
-    const src = lyr.getSource();
 
-    map.removeLayer(lyr);
-    src.clear();
     const features = geoJSON.readFeatures(data, {
       featureProjection: webProjection,
       dataProjection: geoProjection,
@@ -94,8 +103,8 @@ export default {
     const view = map.getView();
     if (features && features.length) {
       view.fit(src.getExtent(), {
-        padding: [50, 50, 50, 50],
-        maxZoom: 5,
+        padding: [20, 20, 20, 20],
+        maxZoom: 7,
       });
     }
 

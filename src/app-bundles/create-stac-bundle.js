@@ -67,6 +67,7 @@ export default (opts) => {
   const selectExtent = `select${uCaseName}Extent`;
   const selectTemporalExtent = `select${uCaseName}TemporalExtent`;
   const selectSpatialExtent = `select${uCaseName}SpatialExtent`;
+  const selectSpatialExtentAsGeometry = `select${uCaseName}SpatialExtentAsGeometry`;
 
   // reactors
   const reactShouldInitialize = `react${uCaseName}ShouldInitialize`;
@@ -413,6 +414,28 @@ export default (opts) => {
     [selectSpatialExtent]: createSelector(
       selectExtent,
       (extent) => (extent && extent.spatial) || null
+    ),
+    [selectSpatialExtentAsGeometry]: createSelector(
+      selectSpatialExtent,
+      (se) => {
+        if (!se || !se.bbox || !se.bbox.length) {
+          return null;
+        }
+        const coordinates = se.bbox.map((box) => {
+          const [yMin, xMin, yMax, xMax] = box;
+          return [
+            [xMin, yMax],
+            [xMin, yMin],
+            [xMax, yMin],
+            [xMax, yMax],
+            [xMin, yMax],
+          ];
+        });
+        return {
+          type: "Polygon",
+          coordinates: coordinates,
+        };
+      }
     ),
     [selectTemporalExtent]: createSelector(
       selectExtent,
