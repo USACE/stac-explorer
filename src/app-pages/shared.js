@@ -102,6 +102,42 @@ export const Tabs = connect(
   }
 );
 
+export const MetadataSection = (props) => (
+  <table className="mb-3 table table-sm">
+    <tbody>
+      <tr>
+        <td colSpan="2" className="bg-success rounded">
+          <span className="text-uppercase">{props.title}</span>
+        </td>
+      </tr>
+      {props.children}
+    </tbody>
+  </table>
+);
+
+export const MetadataSectionEntry = ({ title, value }) => {
+  return (
+    <tr>
+      <td className="title pl-4 border-right">{title}</td>
+      <td>{value}</td>
+    </tr>
+  );
+};
+
+export const MetadataSectionProviderEntry = ({ providerInfo: p }) => (
+  <tr>
+    <td colSpan="2" className="provider pl-4">
+      <a target="_blank" rel="noopener noreferrer" href={p.url}>
+        {p.name}
+      </a>
+      <em className="ml-2">({p.roles.join(", ")})</em>
+      <div className="description">
+        <p>{p.description}</p>
+      </div>
+    </td>
+  </tr>
+);
+
 export const MetadataPanel = ({ children }) => (
   <div className="bg-light border p-4">
     <div

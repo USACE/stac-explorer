@@ -47,9 +47,11 @@ export default (opts) => {
   const selectLinksItemCount = `select${uCaseName}LinksItemCount`;
   const selectLinksChild = `select${uCaseName}LinksChild`;
   const selectLinksChildCount = `select${uCaseName}LinksChildCount`;
+  const selectLinkCollection = `select${uCaseName}LinkCollection`;
   const selectLinkSelf = `select${uCaseName}LinkSelf`;
   const selectTabActive = `select${uCaseName}TabActive`;
   const selectCurrentSlug = `select${uCaseName}CurrentSlug`;
+  const selectCollection = `select${uCaseName}Collection`;
   const selectDescription = `select${uCaseName}Description`;
   const selectIsFetching = `select${uCaseName}IsFetching`;
   const selectError = `select${uCaseName}Error`;
@@ -64,10 +66,12 @@ export default (opts) => {
   const selectProviders = `select${uCaseName}Providers`;
   const selectGeometry = `select${uCaseName}Geometry`;
   const selectAssets = `select${uCaseName}Assets`;
+  const selectAssetsAsArray = `select${uCaseName}AssetsAsArray`;
   const selectExtent = `select${uCaseName}Extent`;
   const selectTemporalExtent = `select${uCaseName}TemporalExtent`;
   const selectSpatialExtent = `select${uCaseName}SpatialExtent`;
   const selectSpatialExtentAsGeometry = `select${uCaseName}SpatialExtentAsGeometry`;
+  const selectProperties = `select${uCaseName}Properties`;
 
   // reactors
   const reactShouldInitialize = `react${uCaseName}ShouldInitialize`;
@@ -245,6 +249,11 @@ export default (opts) => {
       selectLinksItem,
       (linksItem) => linksItem.length
     ),
+
+    [selectCollection]: createSelector(
+      selectInfo,
+      (info) => (info && info.collection) || null
+    ),
     // Catalogs and Collections have a "description" key; Items do not.
     [selectDescription]: createSelector(selectInfo, (info) =>
       !info ? "" : info.description || null
@@ -265,6 +274,10 @@ export default (opts) => {
     [selectLinkSelf]: createSelector(
       selectLinks,
       (links) => links.find((L) => L.rel === "self") || {}
+    ),
+    [selectLinkCollection]: createSelector(
+      selectLinks,
+      (links) => links.find((L) => L.rel === "collection") || null
     ),
     [selectLinksChild]: createSelector(
       selectLinks,
@@ -329,6 +342,9 @@ export default (opts) => {
     ),
     [selectAssets]: createSelector(selectInfo, (info) =>
       info && info.assets ? info.assets : null
+    ),
+    [selectAssetsAsArray]: createSelector(selectAssets, (assets) =>
+      assets && Object.keys(assets).length ? Object.values(assets) : []
     ),
     [selectGeometry]: createSelector(selectInfo, (info) =>
       info && info.geometry ? info.geometry : null
@@ -406,6 +422,10 @@ export default (opts) => {
         }
         return [];
       }
+    ),
+    [selectProperties]: createSelector(
+      selectInfo,
+      (info) => (info && info.properties) || null
     ),
     [selectExtent]: createSelector(
       selectInfo,

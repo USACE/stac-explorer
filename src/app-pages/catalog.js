@@ -2,55 +2,34 @@ import React from "react";
 
 import { connect } from "redux-bundler-react";
 
-import { Breadcrumb, Description, MetadataPanel, Tabs } from "./shared";
+import {
+  Breadcrumb,
+  Description,
+  MetadataPanel,
+  MetadataSectionEntry,
+  MetadataSection,
+  MetadataSectionProviderEntry,
+  Tabs,
+} from "./shared";
 
-const CatalogMetadataTable = connect(
+const CatalogMetadata = connect(
   "selectStacProviders",
   "selectStacInfo",
   ({ stacProviders, stacInfo: info }) => {
     // Styles on Headings
 
-    const Heading = ({ title }) => (
-      <tr>
-        <td colSpan="2" className="bg-success rounded">
-          <h6>{title}</h6>
-        </td>
-      </tr>
-    );
-
-    const Entry = ({ title, value }) => {
-      return (
-        <tr>
-          <td className="title">{title}</td>
-          <td>{value}</td>
-        </tr>
-      );
-    };
-
-    const Provider = ({ providerInfo: p }) => (
-      <tr>
-        <td colSpan="2" className="provider">
-          <a target="_blank" rel="noopener noreferrer" href={p.url}>
-            {p.name}
-          </a>
-          <em className="ml-2">({p.roles.join(", ")})</em>
-          <div className="description">
-            <p>{p.description}</p>
-          </div>
-        </td>
-      </tr>
-    );
-
     return (
       info && (
-        <table className="table-sm">
-          <tbody>
-            <Heading title="Metadata" />
+        <>
+          <MetadataSection title="Metadata">
             {info.stac_version && (
-              <Entry title="STAC Version" value={info.stac_version} />
+              <MetadataSectionEntry
+                title="STAC Version"
+                value={info.stac_version}
+              />
             )}
             {info.license && (
-              <Entry
+              <MetadataSectionEntry
                 title="License"
                 value={
                   <a
@@ -63,18 +42,15 @@ const CatalogMetadataTable = connect(
                 }
               />
             )}
-
-            {/* STAC PROVIDERS */}
-            {stacProviders && stacProviders.length ? (
-              <>
-                <Heading title="Providers" />
-                {stacProviders.map((p, idx) => (
-                  <Provider providerInfo={p} />
-                ))}
-              </>
-            ) : null}
-          </tbody>
-        </table>
+          </MetadataSection>
+          {stacProviders && stacProviders.length ? (
+            <MetadataSection title="Providers">
+              {stacProviders.map((p, idx) => (
+                <MetadataSectionProviderEntry providerInfo={p} />
+              ))}
+            </MetadataSection>
+          ) : null}
+        </>
       )
     );
   }
@@ -174,7 +150,7 @@ export default connect("selectStacTabActive", ({ stacTabActive }) => (
       </div>
       <div className="col-md-4">
         <MetadataPanel>
-          <CatalogMetadataTable />
+          <CatalogMetadata />
         </MetadataPanel>
       </div>
     </div>

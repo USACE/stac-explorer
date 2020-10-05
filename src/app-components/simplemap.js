@@ -15,19 +15,9 @@ export default (props) => {
     maxZoom: 19,
   };
 
-  const tileLayerInfo2 = {
-    id: "CartoDBDarkMatter",
-    name: "CartoDB Dark Matter",
-    url:
-      "https://cartodb-basemaps-{a-c}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png",
-    attributions:
-      '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://cartodb.com/attributionss">CartoDB</a>',
-    maxZoom: 19,
-  };
-
   const tileLayer = new Tile({
     source: new XYZ({
-      url: tileLayerInfo2.url,
+      url: tileLayerInfo.url,
       crossOrigin: true,
       attributions: tileLayerInfo.attributions,
       maxZoom: tileLayerInfo.maxZoom,
